@@ -1,8 +1,7 @@
-from pydantic import EmailStr
 from sqlalchemy.orm import relationship
 
 from .database import Base
-from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text, ForeignKey, ForeignKeyConstraint
+from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP, text, ForeignKey
 
 
 class Post(Base):

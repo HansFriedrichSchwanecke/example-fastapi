@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy import func
@@ -8,7 +8,7 @@ from starlette.responses import Response
 
 from .. import models, oauth2
 from ..database import get_db
-from ..schemas import Post, PostCreate, PostUpdate, PostOut
+from ..schemas import Post, PostCreate, PostUpdate
 
 router = APIRouter(
     prefix='/posts',
@@ -68,7 +68,9 @@ def get_post(id: int, db: Session = Depends(get_db)):
 def delete_post(id: int, db: Session = Depends(get_db), current_user=Depends(oauth2.get_current_user)):
     # cursor.execute("""DELETE from posts WHERE id = %s RETURNING *""", (str(id)))
     # deleted_post = cursor.fetchone()
-    post_query = db.query(models.Post).filter(models.Post.id == id)
+    post_query = db \
+        .query(models.Post) \
+        .filter(models.Post.id == id)
     post = post_query.first()
 
     if post is None:
@@ -88,7 +90,7 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user=Depends(oau
 
 @router.put("/{id}", response_model=Post)
 def update_post(id: int, post: PostUpdate, db: Session = Depends(get_db),
-                current_user: int = Depends(oauth2.get_current_user)):
+                current_user=Depends(oauth2.get_current_user)):
     # cursor.execute("""UPDATE posts SET title = %s, content = %s, published = %s WHERE id = %s RETURNING *""",
     #                (post.title, post.content, post.published, id))
     # updated_post = cursor.fetchone()
@@ -101,7 +103,7 @@ def update_post(id: int, post: PostUpdate, db: Session = Depends(get_db),
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'post with id: {id} does not exist.')
 
-    if updated_post.owner_id != current_user.id:
+    if current_user.id != updated_post.owner_id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                             detail=f'Not authorized for post deletion.')
 
