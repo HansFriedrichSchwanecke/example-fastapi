@@ -31,9 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup database
-          run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "fastapi";'
-          env:
-            PGPASSWORD: password123
+        run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "fastapi";'
+        env:
+          PGPASSWORD: password123
       - name: Checking out our code
         uses: actions/checkout@v2
       - name: Python Set Up
