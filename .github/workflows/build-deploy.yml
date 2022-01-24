@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup database
-        run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "fastapi";'
+        run: psql -h localhost -U postgres -c 'CREATE DATABASE "fastapi";'
         env:
           PGPASSWORD: password123
       - name: Checking out our code
