@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out our code
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
       - name: say hi
-        uses: echo "hello"
+        run: echo "hello"
