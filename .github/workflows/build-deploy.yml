@@ -8,7 +8,7 @@ jobs:
       DATABASE_HOSTNAME: localhost
       DATABASE_PORT: 5432
       DATABASE_PASSWORD: password123
-      DATABASE_NAME: fastapi_test
+      DATABASE_NAME: fastapi
       DATABASE_USERNAME: postgres
       SECURITY_KEY: "HELLO"
       ALGORITHM: HS256
@@ -21,7 +21,7 @@ jobs:
           POSTGRES_DB: fastapi_test
         ports:
           - 5432:5432
-        options: >-
+        options:
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
